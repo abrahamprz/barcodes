@@ -33,12 +33,15 @@ class BarcodePDF:
         self.normal_style = self.styles["BodyText"]
         self.normal_style.fontSize = 6  # Change to your desired size
 
-    def generate_pdf(self, barcode_columns: list) -> None:
+    def generate_pdf(self, barcode_columns: list) -> list:
         """
         Generate a PDF from the CSV file, replacing the specified columns with barcodes.
 
         Args:
             barcode_columns (list): The columns to replace with barcodes.
+
+        Returns:
+            list: A list of missing columns, or an empty list if all columns were found.
         """
         # Create a list to store the table data
         data = []
@@ -50,6 +53,12 @@ class BarcodePDF:
         with open(self.filename, "r") as f:
             reader = csv.reader(f)
             headers = next(reader)  # Assume the first row is headers
+
+            # Check if all specified columns exist in the CSV header
+            missing_columns = [column for column in barcode_columns if column not in headers]
+            if missing_columns:
+                return missing_columns
+
             for row in reader:
                 # Replace the specified columns with barcode images, unless they contain '#N/A'
                 row = [
@@ -71,6 +80,8 @@ class BarcodePDF:
         elements = []
         elements.append(table)
         doc.build(elements)
+
+        return []
 
 
 # Usage:
