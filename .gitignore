@@ -24,7 +24,7 @@ Thumbs.db
 # Generated barcode images, PNGs and PDFs
 barcodes/
 *.png
-*.pdf
+*_barcodes.pdf
 
 # Logs
 logs/
