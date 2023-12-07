@@ -1,5 +1,5 @@
 import csv
-from code128 import Code128
+from src.code128 import Code128
 from reportlab.lib.pagesizes import letter, landscape
 from reportlab.pdfbase import pdfmetrics
 from reportlab.pdfbase.ttfonts import TTFont
