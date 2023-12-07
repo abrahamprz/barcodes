@@ -55,7 +55,9 @@ class BarcodePDF:
             headers = next(reader)  # Assume the first row is headers
 
             # Check if all specified columns exist in the CSV header
-            missing_columns = [column for column in barcode_columns if column not in headers]
+            missing_columns = [
+                column for column in barcode_columns if column not in headers
+            ]
             if missing_columns:
                 return missing_columns
 
