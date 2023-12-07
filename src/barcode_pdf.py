@@ -1,4 +1,4 @@
-import csv
+from csv import reader as csv_reader
 from src.code128 import Code128
 from reportlab.lib.pagesizes import letter, landscape
 from reportlab.pdfbase import pdfmetrics
@@ -6,6 +6,7 @@ from reportlab.pdfbase.ttfonts import TTFont
 from reportlab.platypus import SimpleDocTemplate, Table, Paragraph
 from reportlab.platypus import Image as PlatypusImage
 from reportlab.lib.styles import getSampleStyleSheet
+from os import path
 
 
 class BarcodePDF:
@@ -51,7 +52,7 @@ class BarcodePDF:
 
         # Open the CSV file
         with open(self.filename, "r") as f:
-            reader = csv.reader(f)
+            reader = csv_reader(f)
             headers = next(reader)  # Assume the first row is headers
 
             # Check if all specified columns exist in the CSV header
@@ -74,7 +75,8 @@ class BarcodePDF:
 
         # Create a document template
         doc = SimpleDocTemplate(
-            f"{self.filename.split('.')[0]}_barcodes.pdf", pagesize=landscape(letter)
+            f"{path.basename(self.filename).split('.')[0]}_barcodes.pdf",
+            pagesize=landscape(letter),
         )
 
         # Create a table with the data and add it to the document
